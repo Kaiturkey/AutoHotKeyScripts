@@ -1,0 +1,262 @@
+;SetWorkingDir("C:\AHK\2nd-keyboard\")
+;Menu, Tray, Icon, shell32.dll, 283
+;SetKeyDelay, 0
+
+;;WHAT'S THIS ALL ABOUT??
+;;THE SHORT VERSION: https://www.youtube.com/watch?v=kTXK8kZaZ8c
+;;THE LONG VERSION: https://www.youtube.com/playlist?list=PLH1gH0v9E3ruYrNyRbHhDe6XDfw4sZdZr
+#Requires AutoHotkey v2
+SendMode("Input")
+InstallKeybdHook()
+;#InstallMouseHook
+#UseHook true
+#SingleInstance force
+A_MaxHotkeysPerInterval := 2000
+
+;;Optional settings:
+A_HotkeyModifierTimeout := 60
+KeyHistory(200)
+A_MenuMaskKey := "vk07"
+#WinActivateForce
+
+;;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++;;
+;;+++++++++++++++++ BEGIN SECOND KEYBOARD F24 ASSIGNMENTS +++++++++++++++++++++;;
+;;+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++;;
+
+#HotIf GetKeyState("F24", "P")
+F24::return
+
+escape::ToolTip("`"[F24] You might wish to not give a command to escape. Could cause problems. IDK.`"")
+
+F1::coolFunction("Hello World. From F1")
+
+F2::
+{
+    coolFunction("Hello World. From F2")
+    Sleep(10)
+    MsgBox("`"This is how you do a multi-line key assignment.`nFor the first line, leave the space after the :: blank,`nand then use a RETURN as the last line.`"")
+    return
+}
+
+F3::
+F4::
+F5::
+F6::
+F7::
+F9::
+F8::
+F10::
+F11::
+F12::ToolTip("you pressed the function key " A_ThisHotkey " on the [F24] keyboard")
+
+;;------------------------NEXT ROW--------------------------;;
+
+`::
+1::
+2::
+3::
+4::
+5::
+6::
+7::
+8::
+9::
+0::
+-::
+=::
+backspace::ToolTip("[F24]  " A_ThisHotKey)
+
+;;------------------------NEXT ROW--------------------------;;
+
+tab::
+q::
+w::
+e::
+r::
+t::
+y::
+u::
+i::
+o::
+p::
+[::
+]::
+\::ToolTip("[F24]  " A_ThisHotKey)
+
+;;------------------------NEXT ROW--------------------------;;
+
+a::
+s::
+d::
+f::
+g::
+h::
+j::
+k::
+l::
+`;::
+'::
+enter::ToolTip("[F24]  " A_ThisHotKey)
+
+;;------------------------NEXT ROW--------------------------;;
+
+z::
+x::
+c::{
+    ; 定义Clash路径 - 请根据你的实际安装路径修改
+    clashPath := "C:\Users\58388\Downloads\Clash.for.Windows-0.20.39-win\Clash for Windows.exe"
+    ; 检查 Clash 是否正在运行
+    if ProcessExist("Clash for Windows.exe") {
+        ; 如果正在运行，则停止它
+        try {
+            ResetSystemProxy()
+            WinClose("ahk_exe Clash for Windows.exe")
+            ProcessClose("Clash for Windows.exe")
+            TrayTip "Clash 已停止", "Clash 服务已终止", "Mute"
+        } catch as e {
+            TrayTip "错误", "停止 Clash 时出错: " e.Message, "Mute"
+        }
+    } else {
+        ; 如果没有运行，则启动它
+        try {
+            Run(clashPath)
+            TrayTip "Clash 已启动", "Clash 服务已启动", "Mute"
+        } catch as e {
+            TrayTip "错误", "启动 Clash 时出错: " e.Message, "Mute"
+        }
+    }
+}
+v::
+b::
+n::
+m::
+,::
+.::
+/::ToolTip("[F24]  " A_ThisHotKey)
+
+space::
+{
+    ToolTip("[F24] SPACEBAR. This will now clear remaining tooltips.")
+    Sleep(500)
+    ToolTip()
+    return
+}
+
+;;================= MODIFIERS REMAPPED ======================;;
+
+SC070::ToolTip("[F24] Lshift -to-> SC070-International 2")
+SC071 up::ToolTip("[F24] LCtrl -to-> SC071-Language 2")
+SC072 up::ToolTip("[F24] LWin -to-> SC072-Language 1")
+SC073 up::ToolTip("[F24] LAlt -to-> SC073-International 1")
+SC077::ToolTip("[F24] RAlt -to-> SC077-Language 4")
+SC078::ToolTip("[F24] RWin -to-> SC078-Language 3")
+SC079::ToolTip("[F24] AppsKey -to-> SC079-International 4")
+SC07B::ToolTip("[F24] RCtrl -to-> SC07B-International 5")
+SC07D::ToolTip("[F24] RShift -to-> SC07D-International 3")
+
+;;================= LOCKING KEYS ======================;;
+F20::ToolTip("[F24] CapsLock -to-> SC06B-F20")
+SC05C::ToolTip("[F24] NumLock -to-> SC05C-International 6")
+
+;;================= NEXT SECTION ======================;;
+PrintScreen::ToolTip("[F24] " A_ThisHotkey)
+ScrollLock::ToolTip("[F24] " A_ThisHotkey)
+SC07E::ToolTip("[F24] Pause -to-> SC07E-Brazillian comma")
+
+insert::
+delete::ToolTip("[F24] " A_ThisHotkey)
+
+home::
+end::ToolTip("[F24] " A_ThisHotkey)
+
+pgup::
+pgdn::ToolTip("[F24] " A_ThisHotkey)
+
+;;================= NEXT SECTION ======================;;
+up::
+down::
+left::
+right::ToolTip("[F24] " A_ThisHotkey)
+
+;;=========== THE NUMPAD WITH NUMLOCK ON ==============;;
+numpad0::
+numpad1::
+numpad2::
+numpad3::
+numpad4::
+numpad5::
+numpad6::
+numpad7::
+numpad8::
+numpad9::ToolTip("[F24] " A_ThisHotkey)
+
+;;============ THE NUMPAD WITH NUMLOCK OFF ============;;
+numpadins::
+numpadend::
+numpaddown::
+numpadpgdn::
+numpadleft::
+numpadclear::
+numpadright::
+numpadhome::
+numpadup::
+numpadpgup::ToolTip("[F24] " A_ThisHotkey " Because numlock is off")
+
+;;====== NUMPAD KEYS THAT DON'T CARE ABOUT NUMLOCK =====;;
+numpadDiv::
+numpadMult::
+numpadSub::
+numpadAdd::
+numpadEnter::
+numpadDot::ToolTip("[F24] " A_ThisHotkey)
+
+;;================== JUST IN CASE ======================;;
+F13::
+F14::
+F15::
+F16::
+F17::
+F18::
+F19::ToolTip("[F24] " A_ThisHotkey)
+
+
+#HotIf
+
+;;+++++++++++++++++ END OF SECOND KEYBOARD F24 ASSIGNMENTS +++++++++++++++++++++;;
+
+;;*******************************************************************************
+;;*************DEFINE YOUR NORMAL KEY ASSIGNMENTS BELOW THIS LINE****************
+;;*******************************************************************************
+
+#HotIf WinActive("ahk_exe Adobe Premiere Pro.exe")
+F2::MsgBox("You pressed F2 on your normal keyboard while inside of Premiere Pro.`n`nThis is an autohotkey script by the way - in case you forgot.`nCheck your taskbar to find it.")
+#HotIf
+
+;;~~~~~~~~~~~~~~~~~DEFINE YOUR FUNCTIONS BELOW THIS LINE~~~~~~~~~~~~~~~~~~~~~~~~~
+coolFunction(stuff)
+{
+    MsgBox("You called a function with the following parameter:`n`n" stuff "`n`nCongrats!")
+    MsgBox("You can put whatever you like in here.`n`nI've provided links to the functions I use.")
+}
+
+ResetSystemProxy(*) {
+    try {
+        ; 使用 netsh 命令重置代理
+        RunWait('netsh winsock reset', , 'Hide')
+        RunWait('netsh interface ipv4 reset', , 'Hide')
+        RunWait('netsh interface ipv6 reset', , 'Hide')
+        
+        ; 重置 IE 代理设置
+        RunWait('reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyEnable /t REG_DWORD /d 0 /f', , 'Hide')
+        RunWait('reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyServer /t REG_SZ /d "" /f', , 'Hide')
+        RunWait('reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Internet Settings" /v ProxyOverride /t REG_SZ /d "" /f', , 'Hide')
+        
+        ; 刷新系统设置
+        DllCall("Wininet.dll\InternetSetOption", "Int", 0, "Int", 39, "Int", 0, "Int", 0) ; INTERNET_OPTION_SETTINGS_CHANGED
+        DllCall("Wininet.dll\InternetSetOption", "Int", 0, "Int", 37, "Int", 0, "Int", 0) ; INTERNET_OPTION_REFRESH
+        
+        TrayTip "系统代理已重置", "DNS 和代理设置已恢复默认", "Mute"
+    } catch as e {
+        TrayTip "错误", "重置代理时出错: " e.Message, "Mute"
+    }
+}
